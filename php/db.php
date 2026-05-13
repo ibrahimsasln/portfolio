@@ -1,8 +1,15 @@
 <?php
-$host = 'sql311.infinityfree.com';
-$dbname = 'if0_41907381_portfolio';
-$username = 'if0_41907381';
-$password = 'X9rYBBy9dh';
+if ($_SERVER['HTTP_HOST'] === 'localhost') {
+    $host = 'localhost';
+    $dbname = 'portfolio_db';
+    $username = 'root';
+    $password = '';
+} else {
+    $host = 'sql311.infinityfree.com';
+    $dbname = 'if0_41907381_portfolio';
+    $username = 'if0_41907381';
+    $password = 'X9rYBBy9dh';
+}
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

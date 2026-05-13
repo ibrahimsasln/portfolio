@@ -34,6 +34,12 @@ if (isset($_GET['delete'])) {
     $pdo->prepare("DELETE FROM projects WHERE id = ?")->execute([$id]);
 }
 
+// Mesaj silme
+if (isset($_GET['delete_contact'])) {
+    $id = (int)$_GET['delete_contact'];
+    $pdo->prepare("DELETE FROM contacts WHERE id = ?")->execute([$id]);
+}
+
 $projects = $pdo->query("SELECT * FROM projects ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 $contacts = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -140,6 +146,7 @@ $contacts = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC")->fetc
                 <th>Email</th>
                 <th>Message</th>
                 <th>Date</th>
+                <th>Action</th>
             </tr>
             <?php foreach ($contacts as $contact): ?>
             <tr>
@@ -147,6 +154,7 @@ $contacts = $pdo->query("SELECT * FROM contacts ORDER BY created_at DESC")->fetc
                 <td><?= htmlspecialchars($contact['email']) ?></td>
                 <td><?= htmlspecialchars($contact['message']) ?></td>
                 <td><?= $contact['created_at'] ?></td>
+                <td><a href="?delete_contact=<?= $contact['id'] ?>" onclick="return confirm('Delete this message?')" class="delete-btn">Delete</a></td>
             </tr>
             <?php endforeach; ?>
         </table>
